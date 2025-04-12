@@ -1,8 +1,7 @@
-streamlit
-pandas
-numpy
-matplotlib
-scikit-learn
-wordcloud
-scikit-surprise
+streamlit>=1.31.0
+pandas>=2.2.2
+scikit-learn>=1.4.2
+matplotlib>=3.8.4
+wordcloud>=1.9.3
+scikit-surprise>=1.1.3
 
