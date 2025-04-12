@@ -1,8 +1,10 @@
 streamlit
 scikit-learn
 pandas
-numpy==1.23.5
+numpy>=1.26.4
 scikit-surprise==1.1.4
 wordcloud
 matplotlib
+
+
 
