@@ -1,4 +1,4 @@
-# Final App - Product & User Recommendation System
+# Final App - Product & User Recommendation System (With Clean Home Page)
 # Người thực hiện: Phạm Thị Mai Linh
 # Ngày báo cáo: 13/04/2025
 
@@ -17,8 +17,9 @@ st.set_page_config(page_title='Hệ thống gợi ý sản phẩm', layout='wide
 # ================================
 # Sidebar - Navigation và Thông tin
 # ================================
+st.sidebar.image('picture_2.png', use_column_width=True)
 st.sidebar.title('📂 Điều hướng')
-page = st.sidebar.radio("Chọn mục", ['Insight', 'App'])
+page = st.sidebar.radio("Chọn mục", ['Home', 'Insight', 'App'])
 
 st.sidebar.markdown("""
 ### 🧑‍💻 Người thực hiện
@@ -44,16 +45,38 @@ with open('surprise_model.pkl', 'rb') as f:
 algo = user_model['model']
 df_user = user_model['df_sample']
 
-# Chỉ lấy user_id có product_id trùng với df_product
 valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['user_id'].unique().tolist()
+
+# ================================
+# Trang Home (Không trùng lặp sidebar)
+# ================================
+if page == 'Home':
+    st.image('picture_1.png', width=180)
+    st.title('Welcome to Shopee Recommendation App!')
+
+    st.markdown("""
+    Ứng dụng hỗ trợ tìm kiếm sản phẩm thời trang nam trên Shopee,
+    giúp người dùng lựa chọn sản phẩm phù hợp dựa trên mô tả hoặc lịch sử đánh giá.
+
+    ### 🎓 Thông tin đồ án
+    - **Đồ án tốt nghiệp Data Science and Machine Learning**
+    - **Khóa học:** DL07_DATN_k302_T37
+    - **Giảng viên hướng dẫn:** Cô Khuất Thùy Phương
+    - **Đơn vị đào tạo:** Trung Tâm Tin Học - Trường Đại học Khoa học Tự nhiên
+
+    ### 🔍 Chức năng chính
+    - Gợi ý sản phẩm dựa trên nội dung mô tả
+    - Gợi ý sản phẩm dựa trên lịch sử đánh giá người dùng
+
+    👉 Hãy chọn một mục trong thanh điều hướng bên trái để bắt đầu!
+    """)
 
 # ================================
 # Trang Insight
 # ================================
-if page == 'Insight':
+elif page == 'Insight':
     st.title('📊 Project Insight')
 
-    # --- Mục tiêu Project ---
     st.header('🎯 Mục tiêu project')
     st.markdown("""
     Xây dựng hệ thống gợi ý sản phẩm thời trang nam trên Shopee, nhằm hỗ trợ người tiêu dùng dễ dàng tìm kiếm sản phẩm phù hợp dựa trên:
@@ -62,10 +85,7 @@ if page == 'Insight':
     - **Gợi ý theo người dùng:** Dựa trên lịch sử đánh giá và tương tác của người dùng.
     """)
 
-    # --- EDA ---
     st.header('📊 Khám phá dữ liệu (EDA)')
-
-    # Wordcloud mô tả sản phẩm
     st.subheader('Wordcloud mô tả sản phẩm')
     text = ' '.join(df_product['final_cleaned_tokens'].apply(lambda x: ' '.join(x)))
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
@@ -74,47 +94,37 @@ if page == 'Insight':
     ax.axis('off')
     st.pyplot(fig)
 
-    # Phân phối rating sản phẩm
     st.subheader('Phân phối rating sản phẩm')
     st.bar_chart(df_product['rating'].value_counts().sort_index())
 
-    # Phân phối rating user-based
     st.subheader('Phân phối rating từ người dùng')
     st.bar_chart(df_user['rating'].value_counts().sort_index())
 
-    # --- Các bước làm sạch dữ liệu ---
-    st.header('🧹 Các bước làm sạch dữ liệu')
-    st.markdown("""
-    **Bước 1:** Chuẩn hóa văn bản mô tả sản phẩm.
-    - Xử lý encoding, chuẩn hóa Unicode, loại bỏ ký tự không cần thiết.
+    st.header('🧹 Quy trình làm sạch dữ liệu')
+    st.graphviz_chart('''
+    digraph {
+        node [shape=rectangle, style=rounded, color=orange, fontname="Helvetica", fontsize=12]
+        "Bước 1: Chuẩn hóa văn bản mô tả sản phẩm" -> "Bước 2: Loại bỏ nhiễu và pattern không mong muốn"
+        "Bước 2: Loại bỏ nhiễu và pattern không mong muốn" -> "Bước 3: Tách từ và loại bỏ stopword"
+        "Bước 3: Tách từ và loại bỏ stopword" -> "Bước 4: Kết quả xử lý sẵn sàng cho vector hóa"
+    }
+    ''')
 
-    **Bước 2:** Loại bỏ nhiễu và pattern không mong muốn.
-    - Xóa các mẫu spam, từ ngữ quảng cáo trùng lặp.
-
-    **Bước 3:** Tách từ (Tokenization) và loại bỏ stopword.
-    - Tách các từ trong câu và loại bỏ từ dừng không cần thiết.
-
-    **Bước 4:** Kết quả cuối cùng.
-    - Văn bản sạch và được xử lý trong cột `final_cleaned_tokens` sẵn sàng cho vector hóa.
-    """)
-
-    # --- Thuật toán sử dụng ---
     st.header('🧩 Thuật toán sử dụng')
     st.markdown("""
-    - **Cosine Similarity:** Đo lường mức độ tương đồng giữa các sản phẩm dựa trên mô tả.
-    - **Surprise SVD:** Phân rã ma trận để dự đoán sản phẩm phù hợp với từng người dùng.
+    - **Cosine Similarity:** Đo mức độ tương đồng mô tả sản phẩm.
+    - **Surprise SVD:** Phân rã ma trận dự đoán sản phẩm phù hợp với người dùng.
     """)
 
-    # --- Đánh giá thuật toán ---
-    st.header('📈 Đánh giá thuật toán sử dụng')
+    st.header('📈 Đánh giá thuật toán')
     st.markdown("""
     **Cosine Similarity:**
-    - Ưu điểm: Dễ triển khai, trực quan, hoạt động tốt khi dữ liệu mô tả sản phẩm được làm sạch tốt.
-    - Hạn chế: Không cá nhân hóa theo người dùng.
+    - Ưu điểm: Dễ triển khai, trực quan.
+    - Hạn chế: Không cá nhân hóa.
 
     **Surprise SVD:**
-    - Ưu điểm: Cá nhân hóa gợi ý theo lịch sử người dùng.
-    - Hạn chế: Cần đủ dữ liệu người dùng để huấn luyện chính xác.
+    - Ưu điểm: Cá nhân hóa theo người dùng.
+    - Hạn chế: Cần đủ dữ liệu đánh giá.
     """)
 
 # ================================
@@ -125,7 +135,6 @@ elif page == 'App':
 
     tab1, tab2 = st.tabs(["🛍️ Gợi ý theo sản phẩm", "👥 Gợi ý theo người dùng"])
 
-    # --- Tab 1: Product-based ---
     with tab1:
         st.header('Gợi ý theo sản phẩm (Content-based)')
         user_input = st.text_input('Nhập mô tả sản phẩm bạn muốn tìm gợi ý:')
@@ -151,27 +160,21 @@ elif page == 'App':
                     })
 
                 st.markdown("### 🎯 Kết quả gợi ý:")
-
                 for rec in recommendations:
                     cols = st.columns([1, 3])
                     if rec['Ảnh']:
                         cols[0].image(rec['Ảnh'], width=120)
                     else:
                         cols[0].empty()
-
-                    cols[1].markdown(f"**{rec['Tên sản phẩm']}**")
-                    cols[1].markdown(f"💰 {rec['Giá']} | ⭐️ Điểm tương đồng: {rec['Điểm tương đồng']}")
-                    cols[1].markdown(f"🔗 {rec['Link']}")
+                    cols[1].markdown(f"**{rec['Tên sản phẩm']}**\n💰 {rec['Giá']} | ⭐️ Điểm tương đồng: {rec['Điểm tương đồng']}\n🔗 {rec['Link']}")
                     cols[1].markdown("---")
 
                 results_df = pd.DataFrame(recommendations)
                 csv = results_df.to_csv(index=False).encode('utf-8')
                 st.download_button("📥 Tải kết quả về CSV", data=csv, file_name='recommendations_product.csv', mime='text/csv')
 
-    # --- Tab 2: User-based ---
     with tab2:
         st.header('Gợi ý theo người dùng (Collaborative filtering)')
-
         selected_user = st.selectbox('Chọn User bạn muốn tìm gợi ý:', valid_user_ids)
         top_k_user = st.slider('Số lượng sản phẩm gợi ý:', min_value=1, max_value=20, value=5, key='user_slider')
 
@@ -196,17 +199,13 @@ elif page == 'App':
                     })
 
                 st.markdown("### 🎯 Kết quả gợi ý:")
-
                 for rec in recommendations:
                     cols = st.columns([1, 3])
                     if rec['Ảnh']:
                         cols[0].image(rec['Ảnh'], width=120)
                     else:
                         cols[0].empty()
-
-                    cols[1].markdown(f"**{rec['Tên sản phẩm']}**")
-                    cols[1].markdown(f"💰 {rec['Giá']} | ⭐️ Rating dự đoán: {rec['Rating dự đoán']}")
-                    cols[1].markdown(f"🔗 {rec['Link']}")
+                    cols[1].markdown(f"**{rec['Tên sản phẩm']}**\n💰 {rec['Giá']} | ⭐️ Rating dự đoán: {rec['Rating dự đoán']}\n🔗 {rec['Link']}")
                     cols[1].markdown("---")
 
                 results_df_user = pd.DataFrame(recommendations)
