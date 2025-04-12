@@ -13,6 +13,10 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from surprise import Dataset, Reader, SVD
 from surprise.model_selection import train_test_split
+import os
+
+print("📂 Current working directory:", os.getcwd())
+print("📂 Files in current directory:", os.listdir())
 
 # =============================
 # CONFIG APP
