@@ -21,7 +21,7 @@ Dự án xây dựng hệ thống gợi ý sản phẩm thời trang nam trên S
 
 ## 📂 Cấu trúc project
 
-├── app.py # App chính ├── product_cosine.pkl # Model Cosine đã train ├── surprise_model.pkl # Model Surprise đã train ├── requirements.txt # Thư viện cần thiết └── README.md # Hướng dẫn sử dụng
+├── app.py # App chính ├── cleaned_products.csv # Dữ liệu đã làm sạch ├── Products_ThoiTrangNam_rating_raw.csv # Dữ liệu đánh giá sản phẩm gốc ├── requirements.txt # Thư viện cần thiết └── README.md # Hướng dẫn sử dụng
 
 yaml
 Copy
@@ -31,14 +31,8 @@ Edit
 
 ## 🚀 Hướng dẫn cài đặt Local
 
-### 1. Tạo thư mục project và copy file vào
-
-Copy đầy đủ các file:  
-`app.py`, `requirements.txt`, `README.md`, `product_cosine.pkl`, `surprise_model.pkl`
-
-### 2. Cài đặt thư viện
-
-Mở terminal tại thư mục project, chạy lệnh:
+### 1. Clone project
 
 ```bash
-pip install -r requirements.txt
+git clone <your-repository-url>
+cd <project-directory>
