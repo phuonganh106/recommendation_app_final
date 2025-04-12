@@ -1,13 +1,18 @@
-# FINAL APP - CLEAN & STABLE VERSION
+# FINAL APP - FULL CLEAN & STABLE VERSION
 # Người thực hiện: Phạm Thị Mai Linh
 # Ngày báo cáo: 13/04/2025
 
 import streamlit as st
-import pickle
 import pandas as pd
+import numpy as np
+import ast
+import re
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+from surprise import Dataset, Reader, SVD
+from surprise.model_selection import train_test_split
 
 # =============================
 # CONFIG APP
@@ -29,23 +34,48 @@ st.sidebar.markdown("""
 """)
 
 # =============================
-# LOAD MODELS & DATA
+# LOAD DATA & TRAIN MODELS
 # =============================
-with open('product_cosine.pkl', 'rb') as f:
-    product_model = pickle.load(f)
 
-vectorizer = product_model['vectorizer']
-tfidf_matrix = product_model['tfidf_matrix']
-df_product = product_model['dataframe']
+# Product-based model
+# Load data
+df_product = pd.read_csv('cleaned_products.csv')
+df_product['final_cleaned_tokens'] = df_product['final_cleaned_tokens'].apply(ast.literal_eval)
 
-with open('surprise_model.pkl', 'rb') as f:
-    user_model = pickle.load(f)
+# Load stopwords
+with open('vietnamese-stopwords.txt', 'r', encoding='utf-8') as f:
+    stop_words = set(f.read().splitlines())
 
-algo = user_model['model']
-df_user = user_model['df_sample']
+# Làm sạch tokens
+content_clean = [
+    [
+        re.sub(r'[0-9]+', '', token.lower())
+        for token in tokens
+        if token.lower() not in stop_words and token not in ['', ' ', ',', '.', '...', '-', ':', ';', '?', '%', '(', ')', '+', '/', "'", '&']
+    ]
+    for tokens in df_product['final_cleaned_tokens']
+]
+
+# Vector hóa TF-IDF
+documents = [' '.join(tokens) for tokens in content_clean]
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+# User-based model
+# Load data gốc
+df_user = pd.read_csv('Products_ThoiTrangNam_rating_raw.csv', sep='\t')
+df_user = df_user.drop_duplicates().drop_duplicates(subset=['user_id', 'product_id'], keep='first')
+df_sample = df_user.sample(n=10000, random_state=42).reset_index(drop=True)
+
+reader = Reader(rating_scale=(df_sample['rating'].min(), df_sample['rating'].max()))
+data = Dataset.load_from_df(df_sample[['user_id', 'product_id', 'rating']], reader)
+trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
+
+algo = SVD()
+algo.fit(trainset)
 
 # Chỉ lấy user_id có product_id trùng với df_product
-valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['user_id'].unique().tolist()
+valid_user_ids = df_sample[df_sample['product_id'].isin(df_product['product_id'])]['user_id'].unique().tolist()
 
 # =============================
 # INSIGHT PAGE
@@ -63,7 +93,7 @@ if page == 'Insight':
 
     st.header('📊 Khám phá dữ liệu (EDA)')
     st.subheader('Wordcloud mô tả sản phẩm')
-    text = ' '.join(df_product['final_cleaned_tokens'].apply(lambda x: ' '.join(x)))
+    text = ' '.join([' '.join(tokens) for tokens in content_clean])
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.imshow(wordcloud, interpolation='bilinear')
@@ -74,7 +104,7 @@ if page == 'Insight':
     st.bar_chart(df_product['rating'].value_counts().sort_index())
 
     st.subheader('Phân phối rating từ người dùng')
-    st.bar_chart(df_user['rating'].value_counts().sort_index())
+    st.bar_chart(df_sample['rating'].value_counts().sort_index())
 
     st.header('🧹 Các bước làm sạch dữ liệu')
     st.markdown("""
@@ -158,7 +188,7 @@ elif page == 'App':
         top_k_user = st.slider('Số lượng sản phẩm gợi ý:', 1, 20, 5, key='user_slider')
 
         if st.button('📊 Hiển thị gợi ý người dùng'):
-            user_ratings = df_user[df_user['user_id'] == selected_user]
+            user_ratings = df_sample[df_sample['user_id'] == selected_user]
             if user_ratings.empty:
                 st.warning('⚠️ Người dùng này không có đánh giá trong dữ liệu!')
             else:
