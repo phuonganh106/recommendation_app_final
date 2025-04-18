@@ -42,8 +42,9 @@ valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['
 
 # User database
 USER_DB = {
-    "stellarity": {"password": "12345678", "name": "Stellar"},
-    "sheryluv": {"password": "luv123", "name": "Sheryl"}
+    "admin": {"password": "12345678", "name": "Admin"},
+    "phuonganh": {"password": "panh1006", "name": "Phuong Anh"},
+    "mailinh": {"password": "mailinh97", "name": "Mai Linh"}
 }
 
 def authenticate(username, password):
