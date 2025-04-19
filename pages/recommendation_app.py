@@ -7,24 +7,35 @@ st.set_page_config(
     page_icon="✨"
 )
 
-# ====== CẤU HÌNH SIDEBAR ======
+# SIDEBAR
 with st.sidebar:
+    # Phần tiêu đề
     st.markdown("""
-    **🎯 Recommender System Project**
+    <h3 style='text-align: center; margin-bottom: 0.5em;'>🎯 Recommender System</h3>
+    <p style='text-align: center; font-style: italic; margin-top: 0;'>Graduation Project</p>
+    """, unsafe_allow_html=True)
     
-    *Made by:*
+    # Phần thông tin đồ án (dùng markdown đơn giản)
+    st.markdown("""
+    **📚 Course:**  
+    DL07_DATN_K302_T37  
     
-    👩‍💻 **Nguyễn Thị Mai Linh**
+    **🏫 Institution:**  
+    Trung Tâm Tin Học - Trường ĐH KHTN  
     
-    👨‍💻 **Tô Nguyễn Phương Anh**
+    **👩‍🏫 Instructor:**  
+    Cô Nguyễn Khuất Thùy Phương  
     
-    *Instructed by:*
+    **👨‍💻 Authors:**  
+    - Nguyễn Thị Mai Linh  
+    - Tô Nguyễn Phương Anh  
     
-    👩‍🏫 **Nguyễn Khuất Thùy Phương**
-    
-    *April 2025*
+    **📅 Date:**  
+    April 2025
     """)
-    st.markdown("---")  # Đường phân cách
+    
+    # Đường phân cách cuối
+    st.markdown("---")
 
 
 # Now import other libraries
