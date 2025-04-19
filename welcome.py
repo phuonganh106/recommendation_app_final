@@ -51,9 +51,6 @@ with st.sidebar:
     <p style='text-align: center; font-style: italic; margin-top: 0;'>Graduation Project</p>
     """, unsafe_allow_html=True)
     
-    # Đường phân cách
-    st.markdown("---")
-    
     # Phần thông tin đồ án (dùng markdown đơn giản)
     st.markdown("""
     **📚 Course:**  
