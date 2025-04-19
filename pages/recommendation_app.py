@@ -13,12 +13,15 @@ with st.sidebar:
     **🎯 Recommender System Project**
     
     *Made by:*
+    
     👩‍💻 **Nguyễn Thị Mai Linh**
     
     👨‍💻 **Tô Nguyễn Phương Anh**
     
     *Instructed by:*
+    
     👩‍🏫 **Nguyễn Khuất Thùy Phương**
+    
     *April 2025*
     """)
     st.markdown("---")  # Đường phân cách
