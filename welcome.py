@@ -99,10 +99,10 @@ st.markdown("#### 📊 Dataset Overview")
 
 # Sample data metrics
 data_cols = st.columns(4)
-data_cols[0].metric("Products", "50K+")
-data_cols[1].metric("Users", "150K+")
+data_cols[0].metric("Products", "48K+")
+data_cols[1].metric("Users", "650K+")
 data_cols[2].metric("Ratings", "1M")
-data_cols[3].metric("Categories", "600")
+data_cols[3].metric("Sub Categories", "17")
 
 # Wordcloud & Data distribution
 tab1, tab2, tab3 = st.tabs(["Product Keywords", "Product's Ratings Distribution", "User's Ratings Distribution"])
