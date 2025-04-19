@@ -29,9 +29,12 @@ valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['
 with st.sidebar:
     st.markdown("""
     **🎯 Recommender System Project**
+    
     *Made by:*
     👩‍💻 **Nguyễn Thị Mai Linh**
+    
     👨‍💻 **Tô Nguyễn Phương Anh**
+    
     *Instructed by:*
     👩‍🏫 **Nguyễn Khuất Thùy Phương**
     *April 2025*
