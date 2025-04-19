@@ -45,45 +45,36 @@ valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['
 #     st.markdown("---")  # Đường phân cách
 
 with st.sidebar:
-    # Phần thông tin đồ án
+    # Phần tiêu đề
     st.markdown("""
-    <style>
-        .sidebar-info {
-            font-size: 0.9em;
-            line-height: 1.4;
-            margin-bottom: 1.5em;
-        }
-        .sidebar-divider {
-            border-top: 1px solid #ddd;
-            margin: 1rem 0;
-        }
-    </style>
-    
-    <div class="sidebar-info">
-        <h3 style='text-align: center; margin-bottom: 0.5em;'>🎯 Recommender System</h3>
-        <p style='text-align: center; font-style: italic; margin-top: 0;'>Graduation Project</p>
-        
-        <div class="sidebar-divider"></div>
-        
-        <strong>📚 Course:</strong><br>
-        DL07_DATN_k302_T37<br><br>
-        
-        <strong>🏫 Institution:</strong><br>
-        Trung Tâm Tin Học - Trường ĐH KHTN<br><br>
-        
-        <strong>👩‍🏫 Instructor:</strong><br>
-        Cô Nguyễn Khuất Thùy Phương<br><br>
-        
-        <strong>👨‍💻 Authors:</strong><br>
-        • Nguyễn Thị Mai Linh<br>
-        • Tô Nguyễn Phương Anh<br><br>
-        
-        <strong>📅 Date:</strong><br>
-        April 2025
-    </div>
+    <h3 style='text-align: center; margin-bottom: 0.5em;'>🎯 Recommender System</h3>
+    <p style='text-align: center; font-style: italic; margin-top: 0;'>Graduation Project</p>
     """, unsafe_allow_html=True)
     
-    st.markdown("---")  # Đường phân cách cuối
+    # Đường phân cách
+    st.markdown("---")
+    
+    # Phần thông tin đồ án (dùng markdown đơn giản)
+    st.markdown("""
+    **📚 Course:**  
+    DL07_DATN_K302_T37  
+    
+    **🏫 Institution:**  
+    Trung Tâm Tin Học - Trường ĐH KHTN  
+    
+    **👩‍🏫 Instructor:**  
+    Cô Nguyễn Khuất Thùy Phương  
+    
+    **👨‍💻 Authors:**  
+    - Nguyễn Thị Mai Linh  
+    - Tô Nguyễn Phương Anh  
+    
+    **📅 Date:**  
+    April 2025
+    """)
+    
+    # Đường phân cách cuối
+    st.markdown("---")
 
 
 
