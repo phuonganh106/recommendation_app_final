@@ -32,7 +32,7 @@ import pickle
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-st.image("Shopee_logo.jpg", width=1200)
+st.image("logo_shopee.png")
 
 # ======================
 # 1. INITIALIZATION
