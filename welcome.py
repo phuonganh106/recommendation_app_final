@@ -145,17 +145,37 @@ approach = st.selectbox(
 
 if "SVD++" in approach:
     st.markdown("""
-    **Matrix Factorization Technique**
-    - Decomposes user-item interaction matrix
-    - Captures latent factors in user preferences 
-    - Handles implicit feedback
+    # **Matrix Factorization Technique**
+    # - Decomposes user-item interaction matrix
+    # - Captures latent factors in user preferences 
+    # - Handles implicit feedback
+    **📌 Matrix Factorization Technique (Collaborative Filtering)**
+    - **What is Collaborative Filtering?**  
+      A method that predicts user preferences based on user behavior (ratings, interactions) without requiring product features.
+    - **How SVD++ works:**  
+      - Decomposes user-item interaction matrix (ratings)  
+      - Captures latent factors in user preferences and item characteristics  
+      - Effectively handles implicit feedback (views, purchases)  
+    - **Benefits:**  
+      → Works well for cold-start users with some interaction history  
+      → Discovers hidden patterns in user behavior 
     """)
 else:
     st.markdown("""
-    **Content-Based Filtering**
-    - Analyzes product features (description, category, price)
-    - Use TF-IDF for text processing
-    - Calculates similarity between items
+    # **Content-Based Filtering**
+    # - Analyzes product features (description, category, price)
+    # - Use TF-IDF for text processing
+    # - Calculates similarity between items
+    **📌 Content-Based Filtering**
+    - **What is Content-Based Filtering?**  
+      Recommends items by analyzing product features and matching them to user profiles.
+    - **How Cosine Similarity works:**  
+      - Uses TF-IDF to process text data (descriptions, categories)  
+      - Calculates similarity between items using cosine distance  
+      - Focuses on product attributes (price, category, etc.)  
+    - **Benefits:**  
+      → Works without user interaction data  
+      → Transparent recommendations (explainable by features) 
     """)
 st.markdown("---")
 
