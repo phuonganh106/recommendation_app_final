@@ -206,9 +206,29 @@ def user_based_tab():
     st.success(f"Welcome back, {USER_DB[st.session_state.username]['name']}!")
     
     # User selection and filters
-    selected_user = st.selectbox("Select user profile", 
-                               valid_user_ids, 
-                               format_func=lambda x: f"User {x}")
+    # selected_user = st.selectbox("Select user profile", 
+    #                            valid_user_ids, 
+    #                            format_func=lambda x: f"User {x}")
+
+    # Tạo dropdown từ df_user
+    if 'username' in df_user.columns:
+        # Lấy danh sách user hợp lệ và username tương ứng
+        valid_users = df_user[df_user['user_id'].isin(valid_user_ids)]
+        user_options = valid_users[['user_id', 'username']].drop_duplicates()
+        
+        # Tạo selectbox hiển thị username nhưng giá trị là user_id
+        selected_user = st.selectbox(
+            "Select user profile",
+            options=user_options['user_id'],
+            format_func=lambda x: user_options[user_options['user_id'] == x]['username'].values[0]
+        )
+    else:
+        # Fallback: Hiển thị user_id nếu không có username
+        selected_user = st.selectbox(
+            "Select user profile",
+            options=valid_user_ids,
+            format_func=lambda x: f"User {x}"
+        )
     
     col1, col2 = st.columns(2)
     with col1:
