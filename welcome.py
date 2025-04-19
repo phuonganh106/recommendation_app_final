@@ -26,23 +26,64 @@ valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['
 
 
 # ====== CẤU HÌNH SIDEBAR ======
+# with st.sidebar:
+#     st.markdown("""
+#     **🎯 Recommender System Project**
+    
+#     *Made by:*
+    
+#     👩‍💻 **Nguyễn Thị Mai Linh**
+    
+#     👨‍💻 **Tô Nguyễn Phương Anh**
+    
+#     *Instructed by:*
+    
+#     👩‍🏫 **Nguyễn Khuất Thùy Phương**
+    
+#     *April 2025*
+#     """)
+#     st.markdown("---")  # Đường phân cách
+
 with st.sidebar:
+    # Phần thông tin đồ án
     st.markdown("""
-    **🎯 Recommender System Project**
+    <style>
+        .sidebar-info {
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 1.5em;
+        }
+        .sidebar-divider {
+            border-top: 1px solid #ddd;
+            margin: 1rem 0;
+        }
+    </style>
     
-    *Made by:*
+    <div class="sidebar-info">
+        <h3 style='text-align: center; margin-bottom: 0.5em;'>🎯 Recommender System</h3>
+        <p style='text-align: center; font-style: italic; margin-top: 0;'>Graduation Project</p>
+        
+        <div class="sidebar-divider"></div>
+        
+        <strong>📚 Course:</strong><br>
+        DL07_DATN_k302_T37<br><br>
+        
+        <strong>🏫 Institution:</strong><br>
+        Trung Tâm Tin Học - Trường ĐH KHTN<br><br>
+        
+        <strong>👩‍🏫 Instructor:</strong><br>
+        Cô Nguyễn Khuất Thùy Phương<br><br>
+        
+        <strong>👨‍💻 Authors:</strong><br>
+        • Nguyễn Thị Mai Linh<br>
+        • Tô Nguyễn Phương Anh<br><br>
+        
+        <strong>📅 Date:</strong><br>
+        April 2025
+    </div>
+    """, unsafe_allow_html=True)
     
-    👩‍💻 **Nguyễn Thị Mai Linh**
-    
-    👨‍💻 **Tô Nguyễn Phương Anh**
-    
-    *Instructed by:*
-    
-    👩‍🏫 **Nguyễn Khuất Thùy Phương**
-    
-    *April 2025*
-    """)
-    st.markdown("---")  # Đường phân cách
+    st.markdown("---")  # Đường phân cách cuối
 
 
 
