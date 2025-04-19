@@ -24,26 +24,7 @@ df_user = user_model['df_sample']
 
 valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['user_id'].unique().tolist()
 
-
-# ====== CẤU HÌNH SIDEBAR ======
-# with st.sidebar:
-#     st.markdown("""
-#     **🎯 Recommender System Project**
-    
-#     *Made by:*
-    
-#     👩‍💻 **Nguyễn Thị Mai Linh**
-    
-#     👨‍💻 **Tô Nguyễn Phương Anh**
-    
-#     *Instructed by:*
-    
-#     👩‍🏫 **Nguyễn Khuất Thùy Phương**
-    
-#     *April 2025*
-#     """)
-#     st.markdown("---")  # Đường phân cách
-
+# SIDEBAR
 with st.sidebar:
     # Phần tiêu đề
     st.markdown("""
