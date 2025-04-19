@@ -66,7 +66,9 @@ valid_user_ids = df_user[df_user['product_id'].isin(df_product['product_id'])]['
 USER_DB = {
     "admin": {"password": "12345678", "name": "Admin"},
     "phuonganh": {"password": "panh1006", "name": "Phuong Anh"},
-    "mailinh": {"password": "mailinh97", "name": "Mai Linh"}
+    "mailinh": {"password": "mailinh97", "name": "Mai Linh"},
+    "user123": {"password": "demo123", "name": "User 1"},
+    "user456": {"password": "demo456", "name": "User 2"}
 }
 
 def authenticate(username, password):
@@ -174,6 +176,14 @@ def user_based_tab():
     
     # Check login status
     if not st.session_state.logged_in:
+        with st.expander("🧪 Try these demo accounts", expanded=True):
+            st.markdown("""
+            ### Demo Accounts (For testing only)
+            | Username | Password | Role |
+            |----------|----------|------|
+            | `user123` | `demo123` | Normal User |
+            | `user456` | `demo456` | Normal User |
+            """)
         if st.button("🔐 Sign in to unlock personalized recommendations", type="primary"):
             st.session_state.show_login_form = True
         
