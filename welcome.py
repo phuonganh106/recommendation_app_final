@@ -6,6 +6,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Project Overview", page_icon="💞")
+st.image("header-shopee.jpg")
 st.title("💞 Welcome to Recommender System Project! 💞")
 st.markdown("---")
 
