@@ -145,10 +145,6 @@ approach = st.selectbox(
 
 if "SVD++" in approach:
     st.markdown("""
-    # **Matrix Factorization Technique**
-    # - Decomposes user-item interaction matrix
-    # - Captures latent factors in user preferences 
-    # - Handles implicit feedback
     **📌 Matrix Factorization Technique (Collaborative Filtering)**
     - **What is Collaborative Filtering?**  
       A method that predicts user preferences based on user behavior (ratings, interactions) without requiring product features.
@@ -162,10 +158,6 @@ if "SVD++" in approach:
     """)
 else:
     st.markdown("""
-    # **Content-Based Filtering**
-    # - Analyzes product features (description, category, price)
-    # - Use TF-IDF for text processing
-    # - Calculates similarity between items
     **📌 Content-Based Filtering**
     - **What is Content-Based Filtering?**  
       Recommends items by analyzing product features and matching them to user profiles.
