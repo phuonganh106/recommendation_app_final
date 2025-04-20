@@ -24,7 +24,7 @@ with st.sidebar:
     Trung Tâm Tin Học - Trường ĐH KHTN  
     
     **👩‍🏫 Instructor:**  
-    Cô Nguyễn Khuất Thùy Phương  
+    Cô Khuất Thùy Phương  
     
     **👨‍💻 Authors:**  
     - Nguyễn Thị Mai Linh  
